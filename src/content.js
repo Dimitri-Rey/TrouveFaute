@@ -10,7 +10,7 @@ function createAnalyseOverlay(text, position) {
   content.innerHTML = `
     <div class="voltaire-header">
       <span>Analyse de texte</span>
-      <button class="voltaire-close">×</button>
+      <button class="voltaire-close" onclick="this.closest('.voltaire-overlay').remove()">×</button>
     </div>
     <div class="voltaire-text"></div>
   `;
@@ -18,6 +18,39 @@ function createAnalyseOverlay(text, position) {
   overlay.appendChild(content);
   document.body.appendChild(overlay);
   return overlay;
+}
+
+// Configuration de l'API OpenAI
+const apiUrl = "https://api.openai.com/v1/completions";
+const apiKey = "sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // Remplacez par votre clé API
+
+// Fonction pour appeler l'API OpenAI
+async function callOpenAI(text) {
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        prompt: `Analyse cette phrase et retourne uniquement les mots mal orthographiés ou les erreurs grammaticales, séparés par des virgules: "${text}"`,
+        max_tokens: 100,
+        temperature: 0.7
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].text.trim();
+  } catch (error) {
+    console.error("Erreur lors de l'appel à l'API :", error);
+    throw error;
+  }
 }
 
 // Gestion des messages depuis le background
@@ -35,23 +68,13 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     
     // Création de l'overlay
     const overlay = createAnalyseOverlay(request.text, position);
+    const textContainer = overlay.querySelector('.voltaire-text');
     
     try {
-      // Appel à l'API GPT
-      const response = await fetch('URL_DE_VOTRE_API', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer VOTRE_CLE_API`
-        },
-        body: JSON.stringify({
-          prompt: `Analyse cette phrase et indique uniquement les erreurs grammaticales ou orthographiques: "${request.text}"`,
-          max_tokens: 150
-        })
-      });
+      textContainer.innerHTML = "Analyse en cours...";
       
-      const data = await response.json();
-      const erreurs = data.choices[0].text;
+      // Appel à l'API OpenAI
+      const erreurs = await callOpenAI(request.text);
       
       // Mise en évidence des erreurs dans le texte
       let textHTML = request.text;
@@ -64,9 +87,9 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
         }
       });
       
-      overlay.querySelector('.voltaire-text').innerHTML = textHTML;
+      textContainer.innerHTML = textHTML;
     } catch (error) {
-      overlay.querySelector('.voltaire-text').innerHTML = "Une erreur est survenue lors de l'analyse.";
+      textContainer.innerHTML = `<p class="error">Erreur: ${error.message}</p>`;
     }
   }
 }); 
