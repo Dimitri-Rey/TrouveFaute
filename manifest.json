@@ -1,25 +1,30 @@
 {
-  "name": "Assistant Voltaire GPT",
-  "version": "1.0",
-  "description": "Extension Chrome intégrant l'API GPT pour améliorer votre français",
-  "manifest_version": 3,
-  "permissions": [
-    "activeTab",
-    "scripting",
-    "contextMenus",
-    "storage"
-  ],
-  "background": {
-    "service_worker": "src/background.js"
-  },
-  "action": {
-    "default_popup": "src/popup.html"
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["src/content.js"],
-      "css": ["src/content.css"]
-    }
-  ]
-} 
+    "manifest_version": 3,
+    "name": "Trouve faute",
+    "version": "1.0",
+    "description": "Extension pour trouver les fautes d'orthographe",
+    "permissions": [
+      "activeTab",
+      "storage",
+      "contextMenus"
+    ],
+    "host_permissions": ["https://api.openai.com/*"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "css": ["content.css"],
+        "js": ["content.js"]
+      }
+    ],
+    "web_accessible_resources": [{
+      "resources": ["fonts/*"],
+      "matches": ["<all_urls>"]
+    }]
+}
+  

@@ -1,0 +1,192 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+#voltaire-tooltip {
+    position: fixed;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    padding: 8px;
+    z-index: 999999;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 13px;
+    max-width: 300px;
+    border: 1px solid #dadce0;
+}
+
+.voltaire-error-msg {
+    color: #d93025;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.voltaire-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.voltaire-chip {
+    background: #fce8e6;
+    color: #d93025;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.voltaire-highlight {
+    background-color: #fce8e6;
+    border-bottom: 2px solid #d93025;
+    cursor: pointer;
+    padding: 0 1px;
+    transition: background-color 0.2s;
+}
+
+.voltaire-highlight:hover {
+    background-color: #fad2ce;
+}
+
+.voltaire-suggestions {
+    position: fixed;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    padding: 8px;
+    z-index: 999999;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 13px;
+    border: 1px solid #dadce0;
+    min-width: 200px;
+}
+
+.voltaire-container {
+    position: relative;
+    display: inline;
+}
+
+.voltaire-status {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 12px 20px;
+    z-index: 999999;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 14px;
+    border: 1px solid #dadce0;
+    animation: slideIn 0.3s ease;
+    max-width: 300px;
+}
+
+.voltaire-status-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.voltaire-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e8eaed;
+    border-top-color: #1a73e8;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.voltaire-status.success {
+    color: #1e8e3e;
+    border-left: 4px solid #1e8e3e;
+}
+
+.voltaire-status.error {
+    color: #d93025;
+    border-left: 4px solid #d93025;
+}
+
+.voltaire-status.loading {
+    color: #1a73e8;
+    border-left: 4px solid #1a73e8;
+}
+
+.voltaire-error {
+    background-color: #fce8e6;
+    border-bottom: 2px solid #d93025;
+    padding: 0 1px;
+    transition: all 0.3s ease;
+}
+
+.voltaire-error-highlight {
+    background-color: #d93025;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    animation: pulse 2s infinite;
+}
+
+.voltaire-error-word {
+    background-color: #fce8e6;
+    border: 2px solid #d93025;
+    border-radius: 4px;
+    padding: 2px 4px;
+    margin: 0 2px;
+    animation: errorPulse 2s infinite;
+}
+
+.voltaire-error-glow {
+    position: relative;
+    background-color: rgba(255, 107, 107, 0.1);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin: 0 2px;
+    box-shadow: 0 0 10px #ff6b6b, 
+                0 0 20px #ff6b6b,
+                inset 0 0 5px rgba(255, 107, 107, 0.5);
+    animation: glowPulse 2s ease-in-out infinite;
+    color: #d93025;
+    font-weight: 500;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes errorPulse {
+    0% { border-color: #d93025; }
+    50% { border-color: #ff6b6b; }
+    100% { border-color: #d93025; }
+}
+
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 10px #ff6b6b,
+                    0 0 20px #ff6b6b,
+                    inset 0 0 5px rgba(255, 107, 107, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 15px #ff6b6b,
+                    0 0 30px #ff6b6b,
+                    inset 0 0 8px rgba(255, 107, 107, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 10px #ff6b6b,
+                    0 0 20px #ff6b6b,
+                    inset 0 0 5px rgba(255, 107, 107, 0.5);
+    }
+} 

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voltaire GPT-4o Mini</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --error: #d93025;
+      --success: #1e8e3e;
+      --border: #dadce0;
+    }
+
+    body {
+      width: 380px;
+      margin: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 13px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      width: 24px;
+      height: 24px;
+      background: var(--primary);
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      color: white;
+    }
+
+    h1 {
+      font-size: 16px;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    .container {
+      padding: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 90px;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 13px;
+      resize: none;
+      box-sizing: border-box;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    button {
+      width: 100%;
+      height: 32px;
+      margin: 8px 0;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    button:hover { background: #1557b0; }
+
+    .loading {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin: 8px 0;
+      color: #5f6368;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #e8eaed;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .results {
+      margin-top: 8px;
+      background: #f8f9fa;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    #responseText {
+      padding: 12px;
+    }
+
+    .error-msg {
+      color: var(--error);
+    }
+
+    .success-msg {
+      color: var(--success);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .error-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .error-chip {
+      background: #fce8e6;
+      color: var(--error);
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .fade {
+      animation: fade 0.2s ease-in;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <i class="fas fa-spell-check fa-sm"></i>
+    </div>
+    <span>Trouve faute</span>
+  </div>
+
+  <div class="container">
+    <textarea 
+      id="inputText" 
+      placeholder="Saisissez votre texte ici pour une analyse orthographique..."
+    ></textarea>
+    <button id="analyzeBtn">
+      <i class="fas fa-wand-magic-sparkles"></i>
+      Analyser le texte
+    </button>
+
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      Analyse en cours...
+    </div>
+
+    <div class="results">
+      <div id="responseText"></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
